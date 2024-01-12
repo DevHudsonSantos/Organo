@@ -2,21 +2,31 @@ import "./Formulario.css";
 import CampoTexto from "../CampoTexto";
 import ListaSuspensa from "../ListaSuspensa";
 import Botao from "../Botao";
+import { useState } from "react";
 
-const Formulario = () => {
-  const times = [
-    "Programação",
-    "Front-End",
-    "Data Sciente",
-    "Ux e Design",
-    "Mobile",
-    "Inovação e Gestão",
-  ];
+const Formulario = (props) => {
+
+
+  const [nome, setNome] = useState("")
+  const [cargo, setCargo] = useState("")
+  const [imagem, setImagem] = useState("")
+  const [time, setTime] = useState("")
 
   const aoSalvar = (evento) => {
-    evento.preventDefault(); /* ELE PREVINE QUE O COMANDO EXECULTE O COMPORTAMENTO PADRÃO*/
+    evento.preventDefault(); /* ELE PREVINE QUE O COMANDO EXECULTE O COMPORTAMENTO PADRÃO */
 
-    console.log("For foi submetido");
+    props.aoColaboradorCadastrado({ /* AQUI ESTÁ GUARDANDO AS PROPRIEDADES DO FORMULÁRIO */
+      nome,
+      cargo,
+      imagem,
+      time
+    })
+
+    /* AQUI É ONDE VAI APAGAR OS NOMES DO FORMULÁRIO PARA ADD O PRÓXIMO TIME */
+    setNome('')
+    setCargo('')
+    setImagem('')
+    setTime('')
   };
 
   return (
@@ -27,21 +37,29 @@ const Formulario = () => {
           obrigatorio={true}
           label="Nome"
           placeholder="Digite seu nome"
+          valor={nome}
+          aoAlterado = {valor => setNome(valor)}
         />
         <CampoTexto
           obrigatorio={true}
           label="Cargo"
           placeholder="Digite seu cargo"
+          valor={cargo}
+          aoAlterado = {valor => setCargo(valor)}
         />
         <CampoTexto
           obrigatorio={true} 
           label="Imagem"
           placeholder="Informe o endereço da imagem" 
+          valor={imagem}
+          aoAlterado = {valor => setImagem(valor)}
           />
         <ListaSuspensa 
           obrigatorio={true}
           label="Time"
-          itens={times} 
+          itens={props.times}
+          valor={time}
+          aoAlterado = {valor => setTime(valor)}
         />
         <Botao>
           Criar card

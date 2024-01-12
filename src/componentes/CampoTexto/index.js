@@ -1,29 +1,39 @@
+
 import "./CampoTexto.css";
 
 const CampoTexto = (props) => {
-  /* props é a propriedade*/
+  
+  /* props é a propriedade */
 
   const placeholderModificada = `${props.placeholder}`;
 
-  let valor = ''
-
   const aoDigitado = (evento) => {
-    valor =
-      evento.target.value; /*Pega o valor que está sendo digitado. O target é um evento do JavaScript*/
-    console.log(valor);
+
+    props.aoAlterado(evento.target.value)
+
   };
 
   return (
+
     <div className="campo-texto">
-      <label>{props.label}</label>
+
+      <label>
+        
+        {props.label}
+        
+        </label>
+
       <input
-        value={valor}
-        onChange={aoDigitado} /*CADA LETRA DIGITADA EXECULTA A FUNÇÃ0 AO DIGITADO*/
+
+        value={props.valor}
+        onChange={aoDigitado} /* CADA LETRA DIGITADA EXECULTA A FUNÇÃO AO DIGITADO */
         required={props.obrigatorio}
         placeholder={placeholderModificada}
+        
       />
+
     </div>
-  );
+  ); 
 };
 
 export default CampoTexto;
